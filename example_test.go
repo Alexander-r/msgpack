@@ -173,7 +173,7 @@ func ExampleDecoder_IgnoreMismatchedArrayFields() {
 	// Output: {foo bar }
 }
 
-func ExampleDecoder_IgnoreMismatchedArrayFields2() {
+func ExampleDecoder_ignoreMismatchedArrayFields2() {
 	type Item struct {
 		Foo string
 		Bar string
