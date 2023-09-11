@@ -56,14 +56,6 @@ func getDecoder(typ reflect.Type) decoderFunc {
 }
 
 func _getDecoder(typ reflect.Type) decoderFunc {
-	kind := typ.Kind()
-
-	if kind == reflect.Ptr {
-		if _, ok := typeDecMap.Load(typ.Elem()); ok {
-			return ptrValueDecoder(typ)
-		}
-	}
-
 	if typ.Implements(customDecoderType) {
 		return nilAwareDecoder(typ, decodeCustomValue)
 	}
@@ -75,6 +67,14 @@ func _getDecoder(typ reflect.Type) decoderFunc {
 	}
 	if typ.Implements(textUnmarshalerType) {
 		return nilAwareDecoder(typ, unmarshalTextValue)
+	}
+
+	kind := typ.Kind()
+
+	if kind == reflect.Ptr {
+		if _, ok := typeDecMap.Load(typ.Elem()); ok {
+			return ptrValueDecoder(typ)
+		}
 	}
 
 	// Addressable struct field value.
@@ -127,7 +127,7 @@ func ptrValueDecoder(typ reflect.Type) decoderFunc {
 	decoder := getDecoder(typ.Elem())
 	return func(d *Decoder, v reflect.Value) error {
 		if d.hasNilCode() {
-			if !v.IsNil() {
+			if !v.IsNil() && v.CanSet() {
 				v.Set(d.newValue(typ))
 			}
 			return d.DecodeNil()
