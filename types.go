@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/vmihailenco/tagparser/v2"
+	"github.com/Alexander-r/msgpack/tagparser"
 )
 
 var errorType = reflect.TypeOf((*error)(nil)).Elem()
