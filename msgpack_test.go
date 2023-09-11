@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Alexander-r/msgpack"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/vmihailenco/msgpack/v5"
 )
 
 type nameStruct struct {

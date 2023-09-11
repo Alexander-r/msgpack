@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Alexander-r/msgpack"
+	"github.com/Alexander-r/msgpack/msgpcode"
 	"github.com/stretchr/testify/require"
-	"github.com/vmihailenco/msgpack/v5"
-	"github.com/vmihailenco/msgpack/v5/msgpcode"
 )
 
 func init() {
