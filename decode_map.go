@@ -312,7 +312,12 @@ func decodeStructValue(d *Decoder, v reflect.Value) error {
 
 	fields := structs.Fields(v.Type(), d.structTag)
 	if n != len(fields.List) {
-		return ErrArrayStruct
+		if d.flags&ignoreMismatchedArrayFieldsFlag == 0 {
+			return ErrArrayStruct
+		}
+		if n < len(fields.List) {
+			fields.List = fields.List[:n]
+		}
 	}
 
 	for _, f := range fields.List {
